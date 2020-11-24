@@ -1,0 +1,83 @@
+C:\APEXMP>C:/Python37/python.exe call_apex_mp_everyhru_map.py
+
+hrulist prepartion of has begun at 2020-10-27 21:45:21.794203 ...
+
+
+hrulist prepartion has completed at 2020-10-27 21:45:21.819639 .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Parallel setup of 593 runs has begun at 2020-10-27 21:45:30.255694 ...
+
+
+Parallel setup has completed at 2020-10-27 21:45:55.265560 .
+
+
+Parallel execution of 593 runs has begun at 2020-10-27 21:45:55.267570 ...
+
+Run #0 Completed.    Elasped Time (HH:MM:SS): 00:00:35
+Run #25 Completed.    Elasped Time (HH:MM:SS): 00:00:45
+Run #50 Completed.    Elasped Time (HH:MM:SS): 00:00:55
+Run #75 Completed.    Elasped Time (HH:MM:SS): 00:01:05
+Run #100 Completed.    Elasped Time (HH:MM:SS): 00:01:16
+Run #125 Completed.    Elasped Time (HH:MM:SS): 00:01:26
+Run #150 Completed.    Elasped Time (HH:MM:SS): 00:01:36
+Run #175 Completed.    Elasped Time (HH:MM:SS): 00:01:47
+Run #200 Completed.    Elasped Time (HH:MM:SS): 00:01:57
+Run #225 Completed.    Elasped Time (HH:MM:SS): 00:02:07
+Run #250 Completed.    Elasped Time (HH:MM:SS): 00:02:18
+Run #275 Completed.    Elasped Time (HH:MM:SS): 00:02:28
+Run #300 Completed.    Elasped Time (HH:MM:SS): 00:02:38
+Run #325 Completed.    Elasped Time (HH:MM:SS): 00:02:48
+Run #350 Completed.    Elasped Time (HH:MM:SS): 00:02:59
+Run #375 Completed.    Elasped Time (HH:MM:SS): 00:03:11
+Run #400 Completed.    Elasped Time (HH:MM:SS): 00:03:22
+Run #425 Completed.    Elasped Time (HH:MM:SS): 00:03:34
+Run #450 Completed.    Elasped Time (HH:MM:SS): 00:03:45
+Run #475 Completed.    Elasped Time (HH:MM:SS): 00:03:57
+Run #500 Completed.    Elasped Time (HH:MM:SS): 00:04:08
+Run #525 Completed.    Elasped Time (HH:MM:SS): 00:04:19
+Run #550 Completed.    Elasped Time (HH:MM:SS): 00:04:31
+Run #575 Completed.    Elasped Time (HH:MM:SS): 00:04:42
+
+Parallel execution has completed at 2020-10-27 21:50:12.043413 .
+
+
+Gathering results has begun at 2020-10-27 21:50:12.043413 ...
+
+Gathering has completed at 2020-10-27 21:50:12.242168 .
+
+
+Start time: 2020-10-27-21-45-21
+
+End time: 2020-10-27-21-50-12
