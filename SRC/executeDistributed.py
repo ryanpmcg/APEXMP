@@ -70,7 +70,7 @@ verb = sys.argv[3]
 ubmp = sys.argv[4]
 bmps = sys.argv[5]
 devm = sys.argv[6]
-nworkers = sys.argv[7]
+nworkers = int(sys.argv[7])
 
 #############################################################################
 ############################## DEFINE FUNCTIONS #############################
@@ -163,23 +163,19 @@ def createHrus(slopearray,
 def ctyData():
 
     # Read slope
-    fnslpasc = os.path.join(workdir + "\\INPUTS\\slope\\asc",
-                                    "slp.asc")
+    fnslpasc = os.path.join(workdir + "\\INPUTS\\slope\\asc", "slp.asc")
     slpheader, slopearray = readAsc(fnslpasc)
     
     # Read land use
-    fnluasc = os.path.join(workdir + "\\INPUTS\\landuse\\asc",
-                                    "lu.asc")        
+    fnluasc = os.path.join(workdir + "\\INPUTS\\landuse\\asc", "lu.asc")        
     luheader, landusearray = readAsc(fnluasc)
     
     # Read Soil
-    fnsolasc = os.path.join(workdir + "\\INPUTS\\soil\\asc",
-                                    "sol.asc")                                  
+    fnsolasc = os.path.join(workdir + "\\INPUTS\\soil\\asc", "sol.asc")                                  
     solheader, soilarray = readAsc(fnsolasc)
     
     # Read dem
-    fndemasc = os.path.join(workdir + "\\INPUTS\\dem\\asc",
-                                    "dem.asc")                                 
+    fndemasc = os.path.join(workdir + "\\INPUTS\\dem\\asc", "dem.asc")                                 
     demheader, demarray = readAsc(fndemasc)
 
     # After reading the raster files into the arrays, the next step 
@@ -907,7 +903,7 @@ def main():
 
     # Combine inputs for the job list.
     th1 = datetime.datetime.now()
-    print("\nList prepartion of has begun at " + str(th1) + " ...\n\r")
+    print("List prepartion of has begun at " + str(th1) + " ...\n")
 
     # Reset the run counter to 1.
     idx = 0
@@ -943,7 +939,7 @@ def main():
                 idx = idx + 1
 
     th2 = datetime.datetime.now()
-    print("\nList prepartion has completed at " + str(th2) + " .\n\r")
+    print("List prepartion has completed at " + str(th2) + " .\n")
 
     # Prepare soildatabase for setup
     
@@ -967,11 +963,11 @@ def main():
         r_list.append((i, tsink))
 
     # Clear the terminal output.
-    print("\n" * 30)
+    print("\n" * 10)
 
     # Create the worker pool to setup for model runs.
     tps1 = datetime.datetime.now()
-    print("\nParallel setup of " + str(idx) + " runs has begun at " + str(tps1) + " ...\n\r")
+    print("Parallel setup of " + str(idx) + " runs has begun at " + str(tps1) + " ...\n")
     sys.stdout.flush()
     workers = Pool(nworkers)
     for i in range(len(s_list)):
@@ -979,11 +975,11 @@ def main():
     workers.close()
     workers.join()
     tps2 = datetime.datetime.now()    
-    print("\nParallel setup has completed at " + str(tps2) + " .\n\r")
+    print("Parallel setup has completed at " + str(tps2) + " .\n")
 
     # Create the worker pool to execute model runs.
     tpr1 = datetime.datetime.now()
-    print("\nParallel execution of " + str(idx) + " runs has begun at " + str(tpr1) + " ...\n\r")
+    print("Parallel execution of " + str(idx) + " runs has begun at " + str(tpr1) + " ...\n")
     sys.stdout.flush()
     workers = Pool(nworkers)
     for i in range(len(r_list)):
@@ -992,11 +988,11 @@ def main():
     workers.close()
     workers.join()
     tpr2 = datetime.datetime.now()
-    print("\nParallel execution has completed at " + str(tpr2) + " .\n\r")
+    print("Parallel execution has completed at " + str(tpr2) + " .\n")
 
     # Open results file.
     tg1 = datetime.datetime.now()
-    print("\nGathering results has begun at " + str(tg1) + " ...\n\r")
+    print("Gathering results has begun at " + str(tg1) + " ...\n")
     sys.stdout.flush()
     xout = open(workdir + "\\RESULTS\\everyhru_map\\" + tstart + ".csv", "a")
 
@@ -1029,7 +1025,7 @@ def main():
     # Close results file.
     xout.close()
     tg2 = datetime.datetime.now()
-    print("Gathering has completed at " + str(tg2) + " .\n\r")
+    print("Gathering has completed at " + str(tg2) + " .\n")
 
     # Get the end time.
     now = datetime.datetime.now()

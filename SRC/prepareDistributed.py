@@ -134,7 +134,7 @@ cmd9 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outsd8, outslpasc)
 
 # Execute commands if devMode is off
 for iter in range(1,10):
-    if (devm == False):
+    if (devm == str(0)):
         subprocess.call(eval('cmd' + str(iter)), shell=True)
         print("\n")
 

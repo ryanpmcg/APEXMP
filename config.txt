@@ -1,8 +1,8 @@
-Python: python
-Use BMPs: F
-BMP Selection: 2
-Distributed: T
-Create Maps: T
-Delete Output: F
-Verbose: F
-Developer Mode: T
+Python:: C:/Python37/Python.exe
+Use BMPs:: F
+BMP Selection:: 2
+Distributed:: T
+Create Maps:: T
+Delete Output:: F
+Verbose:: T
+Developer Mode:: F

@@ -96,7 +96,7 @@ def readConfigurationFile():
     # Parse configuration file.
     with open("config.txt", "r") as ins:
         for line in ins:
-            parts = line.split(":")
+            parts = line.split("::")
             if (len(parts) == 2):
                 if (parts[0].startswith("Python")):
                     pythonExe = parts[1].lstrip().rstrip()
