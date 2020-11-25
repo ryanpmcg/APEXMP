@@ -63,7 +63,7 @@ import os, glob, subprocess, sys
 
 workdir = sys.argv[1]
 delete = sys.argv[2]
-spacing = 0
+verb = sys.argv[3]
 
 
 #############################################################################
@@ -71,9 +71,10 @@ spacing = 0
 #############################################################################
 
 # Announce program start
-print("\n" * spacing)
-print("Preparing inputs for every grid cell.")
-print("\n" * spacing)
+if (verb == str(1)):
+    print("\n")
+    print("Preparing inputs for every grid cell.")
+    print("\n")
 
 # Define directories and input file paths
 fd_gismain = workdir + "\\INPUTS"
@@ -127,22 +128,38 @@ cmd7 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outluras, outluasc)
 cmd8 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outsolras, outsolasc)
 cmd9 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outsd8, outslpasc)
 
+# Delete previous output
+if (verb == str(1)):
+    print("Deleting previous output.")
+    print("\n")
+
+os.remove(outdemras)
+os.remove(outluras)
+os.remove(outsolras)
+os.remove(outsd8)
+os.remove(outfel)
+os.remove(outp)
+
 # Execute commands
 for iter in range(1,10):
-  subprocess.call(eval('cmd' + str(iter)), shell=True)
-  print("\n" * spacing)
+    subprocess.call(eval('cmd' + str(iter)), shell=True)
+    print("\n")
 
 # Optionally delete nonessential data output
 if delete == str(1):
-  print("Deleting nonessential output.")
-  print("\n" * spacing)
-  os.remove(outdemras)
-  os.remove(outluras)
-  os.remove(outsolras)
-  os.remove(outsd8)
-  os.remove(outfel)
-  os.remove(outp)
+
+    if (verb == str(1)):
+        print("Deleting nonessential output.")
+        print("\n")
+
+    os.remove(outdemras)
+    os.remove(outluras)
+    os.remove(outsolras)
+    os.remove(outsd8)
+    os.remove(outfel)
+    os.remove(outp)
 
 # Announce program end
-print("Finished preparing inputs.")
-print("\n" * spacing)
+if (verb == str(1)):
+    print("Finished preparing inputs.")
+    print("\n")

@@ -40,7 +40,7 @@
 ############################## IMPORT LIBRARIES ##############################
 ##############################################################################
 
-import os, sys, string, math
+import os, sys, string, math, subprocess
 from multiprocessing import cpu_count, Pool, Process
 
 
@@ -99,11 +99,11 @@ def readConfigurationFile():
             parts = line.split(":")
             if (len(parts) == 2):
                 if (parts[0].startswith("Use BMPs")):
-                    ubmp = parts[1].split(",")
+                    ubmp = parts[1].lstrip().rstrip()
                 if (parts[0].startswith("BMP Selection")):
-                    bmps = parts[1].split(",")
+                    bmps = parts[1].lstrip().rstrip()
                 if (parts[0].startswith("Distributed")):
-                    dist = parts[1].split(",")
+                    dist = parts[1].lstrip().rstrip()
                 if (parts[0].startswith("Create Maps")):
                     maps = parts[1].lstrip().rstrip()
                 if (parts[0].startswith("Delete Output")):
@@ -160,6 +160,23 @@ def main():
     printStartupInformation()
     parameters = readConfigurationFile()
     nworkers = determineOptimalCores()
+
+    # Run user-specified options. Parameters: 0=BMPs, 1=BMPtype, 2=Distributed, 3=Map, 4=Delete, 5=Verbose
+    if (parameters[2] == True):
+        subprocess.call("python ./SRC/prepareDistributed.py " + str(workdir) + " " + str(int(parameters[4])) + " " + str(int(parameters[5])), shell=True)
+        subprocess.call("python ./SRC/executeDistributed.py ", shell=True)
+        subprocess.call("python ./SRC/gatherDistributed.py ", shell=True)
+
+        if (parameters[3] == True):
+            subprocess.call("./SRC/mapDistributed.py ", shell=True)
+
+    else:
+        subprocess.call("python ./SRC/prepareSemiDistributed.py " + str(workdir) + " " + str(int(parameters[4])) + " " + str(int(parameters[5])), shell=True)
+        subprocess.call("python ./SRC/executeSemiDistributed.py ", shell=True)
+        subprocess.call("python ./SRC/gatherSemiDistributed.py ", shell=True)
+
+        if (parameters[3] == True):
+            subprocess.call("python ./SRC/mapSemiDistributed.py ", shell=True)
 
 
 #############################################################################
