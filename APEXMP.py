@@ -98,6 +98,8 @@ def readConfigurationFile():
         for line in ins:
             parts = line.split(":")
             if (len(parts) == 2):
+                if (parts[0].startswith("Python")):
+                    pythonExe = parts[1].lstrip().rstrip()
                 if (parts[0].startswith("Use BMPs")):
                     ubmp = parts[1].lstrip().rstrip()
                 if (parts[0].startswith("BMP Selection")):
@@ -114,6 +116,9 @@ def readConfigurationFile():
                     devm = parts[1].lstrip().rstrip()
 
     # Exit upon empty inputs.
+    if (len(pythonExe) == 0):
+        print("No BMP usage option specified.")
+        sys.exit()
     if (len(ubmp) == 0):
         print("No BMP usage option specified.")
         sys.exit()
@@ -153,7 +158,7 @@ def readConfigurationFile():
         sys.exit()
     
     # Return values.
-    return ubmp, bmps, dist, maps, delete, verb, devm
+    return ubmp, bmps, dist, maps, delete, verb, devm, pythonExe
 
 def determineOptimalCores():
     cores = cpu_count()
@@ -165,7 +170,7 @@ def determineOptimalCores():
 def main():
 
     printStartupInformation()
-    p = readConfigurationFile() # p components: 0=BMPs, 1=BMPtype, 2=Distributed, 3=Map, 4=Delete, 5=Verbose, 6=DevMode
+    p = readConfigurationFile() # p components: 0=BMPs, 1=BMPtype, 2=Distributed, 3=Map, 4=Delete, 5=Verbose, 6=DevMode, 7=PythonExe
     n = determineOptimalCores()
 
     # Create standard arguments (a string of parameters). Parameters: workDir, delete, verb, ubmp, bmps, devm, nworkers
@@ -173,20 +178,20 @@ def main():
 
     # Run user-specified options.
     if (p[2] == True):
-        subprocess.call("python ./SRC/prepareDistributed.py " + pString, shell=True)
-        subprocess.call("python ./SRC/executeDistributed.py " + pString, shell=True)
-        subprocess.call("python ./SRC/gatherDistributed.py " + pString, shell=True)
+        subprocess.call(str(p[7]) + " ./SRC/prepareDistributed.py " + pString, shell=True)
+        subprocess.call(str(p[7]) + " ./SRC/executeDistributed.py " + pString, shell=True)
+        subprocess.call(str(p[7]) + " ./SRC/gatherDistributed.py " + pString, shell=True)
 
         if (p[3] == True):
-            subprocess.call("python ./SRC/mapDistributed.py " + pString, shell=True)
+            subprocess.call(str(p[7]) + " ./SRC/mapDistributed.py " + pString, shell=True)
 
     else:
-        subprocess.call("python ./SRC/prepareSemiDistributed.py " + pString, shell=True)
-        subprocess.call("python ./SRC/executeSemiDistributed.py " + pString, shell=True)
-        subprocess.call("python ./SRC/gatherSemiDistributed.py " + pString, shell=True)
+        subprocess.call(str(p[7]) + " ./SRC/prepareSemiDistributed.py " + pString, shell=True)
+        subprocess.call(str(p[7]) + " ./SRC/executeSemiDistributed.py " + pString, shell=True)
+        subprocess.call(str(p[7]) + " ./SRC/gatherSemiDistributed.py " + pString, shell=True)
 
         if (p[3] == True):
-            subprocess.call("python ./SRC/mapSemiDistributed.py " + pString, shell=True)
+            subprocess.call(str(p[7]) + " ./SRC/mapSemiDistributed.py " + pString, shell=True)
 
 
 #############################################################################
