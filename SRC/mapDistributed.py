@@ -36,6 +36,7 @@
 ##############################################################################
 ############################## IMPORT LIBRARIES ##############################
 ##############################################################################
+
 import glob, os, sys, shutil
 import pandas as pd
 import datetime
@@ -44,11 +45,25 @@ import numpy as np
 import gdal
 import gdalconst
 from datetime import timedelta
+
+
+#############################################################################
+############################## GLOBAL VARIABLES #############################
+#############################################################################
+
+workdir = sys.argv[1]
+delete = sys.argv[2]
+verb = sys.argv[3]
+ubmp = sys.argv[4]
+bmps = sys.argv[5]
+devm = sys.argv[6]
+nworkers = int(sys.argv[7])
+
+
 #############################################################################
 ################################ RUN PROGRAM ################################
 #############################################################################
 
-workdir = os.path.dirname(os.path.realpath(sys.argv[0]))
 resultslst = glob.glob("%s/*.csv" %(workdir+"\\RESULTS\\everyhru_map")) 
 
 for idx in range(len(resultslst)):
