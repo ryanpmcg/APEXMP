@@ -134,17 +134,15 @@ cmd9 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outsd8, outslpasc)
 
 # Execute commands if devMode is off
 for iter in range(1,10):
-    if (devMode == False):
+    if (devm == False):
         subprocess.call(eval('cmd' + str(iter)), shell=True)
         print("\n")
 
 # Optionally delete nonessential data output
 if delete == str(1):
-
     if (verb == str(1)):
         print("Deleting nonessential output.")
         print("\n")
-
     os.remove(outdemras)
     os.remove(outluras)
     os.remove(outsolras)

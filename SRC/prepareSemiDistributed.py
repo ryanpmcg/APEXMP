@@ -201,7 +201,7 @@ for didx in range(len(datasets)):
 
     # Execute commands
     for iter in range(1,12):
-        if (devMode == False):
+        if (devm == False):
             subprocess.call(eval('cmd' + str(iter)), shell=True)
             print("\n")
 
