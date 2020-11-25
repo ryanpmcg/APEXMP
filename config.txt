@@ -3,3 +3,4 @@ BMP Selection: 2
 Distributed: T
 Create Maps: T
 Delete Output: F
+Verbose: F

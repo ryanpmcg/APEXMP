@@ -40,7 +40,8 @@
 ############################## IMPORT LIBRARIES ##############################
 ##############################################################################
 
-import os, sys, string
+import os, sys, string, math
+from multiprocessing import cpu_count, Pool, Process
 
 
 #############################################################################
@@ -107,6 +108,8 @@ def readConfigurationFile():
                     maps = parts[1].lstrip().rstrip()
                 if (parts[0].startswith("Delete Output")):
                     delete = parts[1].lstrip().rstrip()
+                if (parts[0].startswith("Verbose")):
+                    verb = parts[1].lstrip().rstrip()
 
     # Exit upon empty inputs.
     if (len(ubmp) == 0):
@@ -124,30 +127,39 @@ def readConfigurationFile():
     if (len(delete) == 0):
         print("No deletion option specified.")
         sys.exit()
+    if (len(verb) == 0):
+        print("No verbosity option specified.")
+        sys.exit()
 
     # Convert boolean strings to boolean values.
     ubmp = (ubmp == "T")
     dist = (dist == "T")
     maps = (maps == "T")
     delete = (delete == "T")
+    verb = (verb == "T")
 
     # Exit upon incorrect readings.
-    if ((type(ubmp) == type(True)) and (type(dist) == type(True)) and (type(maps) == type(True)) and (type(delete) == type(True))):
-        print("All logical parameters read correctly.")
+    if ((type(ubmp) == type(True)) and (type(dist) == type(True)) and (type(maps) == type(True)) and (type(delete) == type(True)) and (type(verb) == type(True))):
+        if (verb == True):
+            print("All logical parameters read correctly.")
     else:
         print("Incorrect boolean string values. Use 'T' or 'F' only.")
         sys.exit()
+    
+    # Return values.
+    return ubmp, bmps, dist, maps, delete, verb
 
 def determineOptimalCores():
     cores = cpu_count()
-    nworkers_90 = math.floor(cores/10*9)
+    nworkers_90 = math.floor(float(cores)/10*9)
     nworkers_min = 1
     nworkers = int(max(nworkers_90, nworkers_min))
 
 def main():
 
     printStartupInformation()
-    readConfigurationFile()
+    parameters = readConfigurationFile()
+    nworkers = determineOptimalCores()
 
 
 #############################################################################
@@ -156,20 +168,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# # 1. choose conventional operations(0) or BMPs(1), and input BMPs number(-integer-) if choose 1
-#   user return 0: record and input it as 'ops' for ops_or_bmps to call_apex_mp
-#   user return 1 and -interger-: record and input them as 'bmps' for ops_or_bmps and '-interger-' for bmps to call_apex_mp
-
-# 2. choose between every grid(0) or grouped grids(1)
-#   user return 0: select prepare_data_everyhru.py and call_apex_mp_everyhru_map.py to run
-#   user return 1: select prepare_data_grouphru.py and call_apex_mp_grouphru_map.py to run
-
-# 3. choose table results(0), map results(1), or both(2)
-#   user return 0-0: select results_analysis_everyhru.py to run
-#   user return 0-1: select results_analysis_everyhru_map.py to run
-#   user return 0-2: select both ones above to run
-#   user return 1-0: select results_analysis_grouphru.py to run
-#   user return 1-1: select results_analysis_grouphru_map.py to run
-#   user return 1-2: select both ones above to run
-
