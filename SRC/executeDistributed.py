@@ -69,7 +69,8 @@ delete = sys.argv[2]
 verb = sys.argv[3]
 ubmp = sys.argv[4]
 bmps = sys.argv[5]
-nworkers = sys.argv[6]
+devm = sys.argv[6]
+nworkers = sys.argv[7]
 
 #############################################################################
 ############################## DEFINE FUNCTIONS #############################

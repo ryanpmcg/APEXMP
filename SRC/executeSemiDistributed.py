@@ -68,7 +68,13 @@ from subprocess import Popen,PIPE
 ############################## GLOBAL VARIABLES #############################
 #############################################################################
 
-workdir = os.path.dirname(os.path.realpath(sys.argv[0]))
+workdir = sys.argv[1]
+delete = sys.argv[2]
+verb = sys.argv[3]
+ubmp = sys.argv[4]
+bmps = sys.argv[5]
+devm = sys.argv[6]
+nworkers = sys.argv[7]
 
 
 #############################################################################

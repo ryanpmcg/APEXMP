@@ -64,6 +64,10 @@ import os, glob, subprocess, sys
 workdir = sys.argv[1]
 delete = sys.argv[2]
 verb = sys.argv[3]
+ubmp = sys.argv[4]
+bmps = sys.argv[5]
+devm = sys.argv[6]
+nworkers = sys.argv[7]
 
 
 #############################################################################
@@ -128,10 +132,11 @@ cmd7 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outluras, outluasc)
 cmd8 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outsolras, outsolasc)
 cmd9 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outsd8, outslpasc)
 
-# Execute commands
+# Execute commands if devMode is off
 for iter in range(1,10):
-    subprocess.call(eval('cmd' + str(iter)), shell=True)
-    print("\n")
+    if (devMode == False):
+        subprocess.call(eval('cmd' + str(iter)), shell=True)
+        print("\n")
 
 # Optionally delete nonessential data output
 if delete == str(1):

@@ -73,7 +73,11 @@ from osgeo import ogr
 
 workdir = sys.argv[1]
 delete = sys.argv[2]
-spacing = 0
+verb = sys.argv[3]
+ubmp = sys.argv[4]
+bmps = sys.argv[5]
+devm = sys.argv[6]
+nworkers = sys.argv[7]
 
 
 #############################################################################
@@ -81,8 +85,10 @@ spacing = 0
 #############################################################################
 
 # Announce program start
-print("Preparing inputs for lumped grid cell groups.")
-print("\n\r" * spacing)
+if (verb == str(1)):
+    print("\n")
+    print("Preparing inputs for every grid cell.")
+    print("\n")
 
 # Define directories and input file paths
 fd_gismain = workdir + "\\INPUTS"
@@ -195,20 +201,23 @@ for didx in range(len(datasets)):
 
     # Execute commands
     for iter in range(1,12):
-        subprocess.call(eval('cmd' + str(iter)), shell=True)
-        print("\n" * spacing)
+        if (devMode == False):
+            subprocess.call(eval('cmd' + str(iter)), shell=True)
+            print("\n")
 
 # Optionally delete nonessential data output
 if delete == str(1):
-  print("Deleting nonessential output.")
-  print("\n" * spacing)
-  os.remove(outdemras)
-  os.remove(outluras)
-  os.remove(outsolras)
-  os.remove(outsd8)
-  os.remove(outfel)
-  os.remove(outp)
+    if (verb == str(1)):
+        print("Deleting nonessential output.")
+        print("\n")
+    os.remove(outdemras)
+    os.remove(outluras)
+    os.remove(outsolras)
+    os.remove(outsd8)
+    os.remove(outfel)
+    os.remove(outp)
 
 # Announce program end
-print("Finished preparing inputs.")
-print("\n" * spacing)
+if (verb == str(1)):
+    print("Finished preparing inputs.")
+    print("\n")

@@ -110,6 +110,8 @@ def readConfigurationFile():
                     delete = parts[1].lstrip().rstrip()
                 if (parts[0].startswith("Verbose")):
                     verb = parts[1].lstrip().rstrip()
+                if (parts[0].startswith("Developer Mode")):
+                    devm = parts[1].lstrip().rstrip()
 
     # Exit upon empty inputs.
     if (len(ubmp) == 0):
@@ -130,6 +132,9 @@ def readConfigurationFile():
     if (len(verb) == 0):
         print("No verbosity option specified.")
         sys.exit()
+    if (len(devm) == 0):
+        print("No development option specified.")
+        sys.exit()
 
     # Convert boolean strings to boolean values.
     ubmp = (ubmp == "T")
@@ -137,9 +142,10 @@ def readConfigurationFile():
     maps = (maps == "T")
     delete = (delete == "T")
     verb = (verb == "T")
+    devm = (devm == "T")
 
     # Exit upon incorrect readings.
-    if ((type(ubmp) == type(True)) and (type(dist) == type(True)) and (type(maps) == type(True)) and (type(delete) == type(True)) and (type(verb) == type(True))):
+    if ((type(ubmp) == type(True)) and (type(dist) == type(True)) and (type(maps) == type(True)) and (type(delete) == type(True)) and (type(verb) == type(True)) and (type(devm) == type(True))):
         if (verb == True):
             print("All logical parameters read correctly.")
     else:
@@ -147,36 +153,40 @@ def readConfigurationFile():
         sys.exit()
     
     # Return values.
-    return ubmp, bmps, dist, maps, delete, verb
+    return ubmp, bmps, dist, maps, delete, verb, devm
 
 def determineOptimalCores():
     cores = cpu_count()
     nworkers_90 = math.floor(float(cores)/10*9)
     nworkers_min = 1
     nworkers = int(max(nworkers_90, nworkers_min))
+    return nworkers
 
 def main():
 
     printStartupInformation()
-    p = readConfigurationFile()
+    p = readConfigurationFile() # p components: 0=BMPs, 1=BMPtype, 2=Distributed, 3=Map, 4=Delete, 5=Verbose, 6=DevMode
     n = determineOptimalCores()
 
-    # Run user-specified options. Parameters: 0=BMPs, 1=BMPtype, 2=Distributed, 3=Map, 4=Delete, 5=Verbose
+    # Create standard arguments (a string of parameters). Parameters: workDir, delete, verb, ubmp, bmps, devm, nworkers
+    pString = str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])) + " " + str(int(p[0])) + " " + str(int(p[1])) + " "+ str(int(p[6])) + " " + str(n)
+
+    # Run user-specified options.
     if (p[2] == True):
-        subprocess.call("python ./SRC/prepareDistributed.py " + str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])), shell=True)
-        subprocess.call("python ./SRC/executeDistributed.py " + str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])) + " " + str(int(p[0])) + " " + str(int(p[1])) + " " + str(n), shell=True)
-        subprocess.call("python ./SRC/gatherDistributed.py ", shell=True)
+        subprocess.call("python ./SRC/prepareDistributed.py " + pString, shell=True)
+        subprocess.call("python ./SRC/executeDistributed.py " + pString, shell=True)
+        subprocess.call("python ./SRC/gatherDistributed.py " + pString, shell=True)
 
         if (p[3] == True):
-            subprocess.call("./SRC/mapDistributed.py ", shell=True)
+            subprocess.call("python ./SRC/mapDistributed.py " + pString, shell=True)
 
     else:
-        subprocess.call("python ./SRC/prepareSemiDistributed.py " + str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])), shell=True)
-        subprocess.call("python ./SRC/executeSemiDistributed.py " + str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])) + " " + str(int(p[0])) + " " + str(int(p[1])) + " " + str(n), shell=True)
-        subprocess.call("python ./SRC/gatherSemiDistributed.py ", shell=True)
+        subprocess.call("python ./SRC/prepareSemiDistributed.py " + pString, shell=True)
+        subprocess.call("python ./SRC/executeSemiDistributed.py " + pString, shell=True)
+        subprocess.call("python ./SRC/gatherSemiDistributed.py " + pString, shell=True)
 
         if (p[3] == True):
-            subprocess.call("python ./SRC/mapSemiDistributed.py ", shell=True)
+            subprocess.call("python ./SRC/mapSemiDistributed.py " + pString, shell=True)
 
 
 #############################################################################
