@@ -128,18 +128,6 @@ cmd7 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outluras, outluasc)
 cmd8 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outsolras, outsolasc)
 cmd9 = 'gdal_translate -of AAIGrid -b 1 %s %s' % (outsd8, outslpasc)
 
-# Delete previous output
-if (verb == str(1)):
-    print("Deleting previous output.")
-    print("\n")
-
-os.remove(outdemras)
-os.remove(outluras)
-os.remove(outsolras)
-os.remove(outsd8)
-os.remove(outfel)
-os.remove(outp)
-
 # Execute commands
 for iter in range(1,10):
     subprocess.call(eval('cmd' + str(iter)), shell=True)

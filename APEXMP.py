@@ -158,24 +158,24 @@ def determineOptimalCores():
 def main():
 
     printStartupInformation()
-    parameters = readConfigurationFile()
-    nworkers = determineOptimalCores()
+    p = readConfigurationFile()
+    n = determineOptimalCores()
 
     # Run user-specified options. Parameters: 0=BMPs, 1=BMPtype, 2=Distributed, 3=Map, 4=Delete, 5=Verbose
-    if (parameters[2] == True):
-        subprocess.call("python ./SRC/prepareDistributed.py " + str(workdir) + " " + str(int(parameters[4])) + " " + str(int(parameters[5])), shell=True)
-        subprocess.call("python ./SRC/executeDistributed.py ", shell=True)
+    if (p[2] == True):
+        subprocess.call("python ./SRC/prepareDistributed.py " + str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])), shell=True)
+        subprocess.call("python ./SRC/executeDistributed.py " + str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])) + " " + str(int(p[0])) + " " + str(int(p[1])) + " " + str(n), shell=True)
         subprocess.call("python ./SRC/gatherDistributed.py ", shell=True)
 
-        if (parameters[3] == True):
+        if (p[3] == True):
             subprocess.call("./SRC/mapDistributed.py ", shell=True)
 
     else:
-        subprocess.call("python ./SRC/prepareSemiDistributed.py " + str(workdir) + " " + str(int(parameters[4])) + " " + str(int(parameters[5])), shell=True)
-        subprocess.call("python ./SRC/executeSemiDistributed.py ", shell=True)
+        subprocess.call("python ./SRC/prepareSemiDistributed.py " + str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])), shell=True)
+        subprocess.call("python ./SRC/executeSemiDistributed.py " + str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])) + " " + str(int(p[0])) + " " + str(int(p[1])) + " " + str(n), shell=True)
         subprocess.call("python ./SRC/gatherSemiDistributed.py ", shell=True)
 
-        if (parameters[3] == True):
+        if (p[3] == True):
             subprocess.call("python ./SRC/mapSemiDistributed.py ", shell=True)
 
 

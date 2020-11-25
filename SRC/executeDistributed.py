@@ -65,8 +65,11 @@ from subprocess import Popen,PIPE
 #############################################################################
 
 workdir = sys.argv[1]
-spacing = 0
-
+delete = sys.argv[2]
+verb = sys.argv[3]
+ubmp = sys.argv[4]
+bmps = sys.argv[5]
+nworkers = sys.argv[6]
 
 #############################################################################
 ############################## DEFINE FUNCTIONS #############################
@@ -887,22 +890,6 @@ def main():
     ops_or_bmps = ''
     bmps = ''
 
-    # Read the configuration file.
-    with open("config.txt", "r") as config:
-        for line in config:
-            parts = re.split(":|\n",line)
-            if (parts[0].startswith("ops or bmps")):
-                ops_or_bmps = parts[1]                
-            if (parts[0].startswith("bmps")):
-                bmps = parts[1]
-
-    # Exit upon empty inputs.
-    if (len(ops_or_bmps) == 0):
-        print("Did not make choice of ops or bmps.")
-        sys.exit()
-    if (len(bmps) == 0):
-        print("No bmps specified.")
-        sys.exit()
 
     # Create the run and result folder
     try:
@@ -930,7 +917,7 @@ def main():
 
     # determine ops or bmps, and reorganize job list
     for hruidx in range(len(list(hrulsts.keys()))): 
-        if ops_or_bmps == "ops":
+        if ubmp == str(0):
             # Get inputs.
             hruinpart1 = []
             hruinpart2 = []
@@ -981,15 +968,6 @@ def main():
     # Clear the terminal output.
     print("\n" * 30)
 
-    # Determine a suitable number of cores to use.
-    cores = cpu_count()
-    nworkers_75 = math.floor(cores/4*3)
-    nworkers_4b = cores - 4
-    nworkers_min = 1
-    nworkers_max = 32
-    nworkers = int(max(nworkers_75, nworkers_4b, nworkers_min))
-    nworkers = int(min(nworkers, nworkers_max))
-
     # Create the worker pool to setup for model runs.
     tps1 = datetime.datetime.now()
     print("\nParallel setup of " + str(idx) + " runs has begun at " + str(tps1) + " ...\n\r")
@@ -1034,7 +1012,7 @@ def main():
         longitude = str(float(hruinvar[i][1]))
         elevation = str(hruinvar[i][5])
         rowid_colid = str(hruinvar[i][6])
-        if ops_or_bmps == 'ops':
+        if ubmp == str(0):
             operation = str(1)
         else:
             operation = str(hruinvar[i][7])
