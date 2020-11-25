@@ -40,7 +40,7 @@
 ############################## IMPORT LIBRARIES ##############################
 ##############################################################################
 
-import os, glob, subprocess, sys
+import os, sys
 
 
 #############################################################################
@@ -52,14 +52,65 @@ spacing = 0
 
 
 #############################################################################
+############################## DEFINE FUNCTIONS #############################
+#############################################################################
+
+def printStartupInformation():
+
+    print("\n" * spacing)
+    print("***********************************************************************")
+    print("  Agricultural Policy Extender Model Multiprocessing Program (APEXMP)  ")
+    print("***********************************************************************")
+    print("\n" * spacing)
+    print("Copyright (c) 2020 Feng Pan, Qingyu Feng, and Ryan McGehee\
+        \
+        This program is free software: you can redistribute it and/or modify\
+        it under the terms of the GNU General Public License as published by\
+        the Free Software Foundation (GNU GPL v3.0).\
+        \
+        This program is distributed in the hope that it will be useful,\
+        but WITHOUT ANY WARRANTY; without even the implied warranty of\
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\
+        GNU General Public License for more details.\
+        \
+        You should have received a copy of the GNU General Public License\
+        along with this program.  If not, see <http://www.gnu.org/licenses/>.\
+        \
+        Please provide an appropriate citation in any published work as follows:\
+        \
+        Pan, F., Q. Feng, R.P. McGehee, B.A. Engel, D.C. Flanagan, and J. Chen.\
+            <PUBLICATION YEAR>\
+            <TITLE>\
+            <JOURNAL INFO>\
+            <DOI>\
+            Repository available at: https://github.com/ryanpmcg/APEXMP\
+        \
+        Corresponding Author: F. Pan\
+        E-mail: ryanpmcgehee@gmail.com\
+        ")
+    print("\n" * spacing)
+
+def readConfigurationFile():
+    print("Hi")
+
+def determineOptimalCores():
+    cores = cpu_count()
+    nworkers_90 = math.floor(cores/10*9)
+    nworkers_min = 1
+    nworkers = int(max(nworkers_90, nworkers_min))
+
+def main():
+
+    printStartupInformation()
+    readConfigurationFile()
+
+
+#############################################################################
 ################################ RUN PROGRAM ################################
 #############################################################################
 
-# Announce program start
-print("\n" * spacing)
-print("Preparing inputs for every grid cell.")
-print("\n" * spacing)
-
+if __name__ == '__main__':
+    main()
 
 # # 1. choose conventional operations(0) or BMPs(1), and input BMPs number(-integer-) if choose 1
 #   user return 0: record and input it as 'ops' for ops_or_bmps to call_apex_mp
@@ -80,10 +131,3 @@ print("\n" * spacing)
 # 4. After user make all the selection (and input), run the selected scripts.
 
         # Determine a suitable number of cores to use.
-        cores = cpu_count()
-        nworkers_75 = math.floor(cores/4*3)
-        nworkers_4b = cores - 4
-        nworkers_min = 1
-        nworkers_max = 32
-        nworkers = int(max(nworkers_75, nworkers_4b, nworkers_min))
-        nworkers = int(min(nworkers, nworkers_max))
