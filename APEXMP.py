@@ -40,15 +40,14 @@
 ############################## IMPORT LIBRARIES ##############################
 ##############################################################################
 
-import os, sys
+import os, sys, string
 
 
 #############################################################################
 ############################## GLOBAL VARIABLES #############################
 #############################################################################
 
-workdir = sys.argv[1]
-spacing = 0
+workdir = os.path.dirname(os.path.realpath(sys.argv[0]))
 
 
 #############################################################################
@@ -57,41 +56,87 @@ spacing = 0
 
 def printStartupInformation():
 
-    print("\n" * spacing)
-    print("***********************************************************************")
-    print("  Agricultural Policy Extender Model Multiprocessing Program (APEXMP)  ")
-    print("***********************************************************************")
-    print("\n" * spacing)
-    print("Copyright (c) 2020 Feng Pan, Qingyu Feng, and Ryan McGehee\
-        \
-        This program is free software: you can redistribute it and/or modify\
-        it under the terms of the GNU General Public License as published by\
-        the Free Software Foundation (GNU GPL v3.0).\
-        \
-        This program is distributed in the hope that it will be useful,\
-        but WITHOUT ANY WARRANTY; without even the implied warranty of\
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\
-        GNU General Public License for more details.\
-        \
-        You should have received a copy of the GNU General Public License\
-        along with this program.  If not, see <http://www.gnu.org/licenses/>.\
-        \
-        Please provide an appropriate citation in any published work as follows:\
-        \
-        Pan, F., Q. Feng, R.P. McGehee, B.A. Engel, D.C. Flanagan, and J. Chen.\
-            <PUBLICATION YEAR>\
-            <TITLE>\
-            <JOURNAL INFO>\
-            <DOI>\
-            Repository available at: https://github.com/ryanpmcg/APEXMP\
-        \
-        Corresponding Author: F. Pan\
-        E-mail: ryanpmcgehee@gmail.com\
+    print("\n" * 30)
+    print("****************************************************************************")
+    print("  Agricultural Policy Extender Model Multiprocessing Program (APEXMP) v1.0  ")
+    print("****************************************************************************")
+    print("\n")
+    print("\
+        Copyright (c) 2020 Feng Pan, Qingyu Feng, and Ryan McGehee\n\
+        \n\
+        This program is free software: you can redistribute it and/or modify\n\
+        it under the terms of the GNU General Public License as published by\n\
+        the Free Software Foundation (GNU GPL v3.0).\n\
+        \n\
+        This program is distributed in the hope that it will be useful,\n\
+        but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
+        GNU General Public License for more details.\n\
+        \n\
+        You should have received a copy of the GNU General Public License\n\
+        along with this program.  If not, see <http://www.gnu.org/licenses/>.\n\
+        \n\
+        Please provide an appropriate citation in any published work as follows:\n\
+        \n\
+        Pan, F., Q. Feng, R.P. McGehee, B.A. Engel, D.C. Flanagan, and J. Chen.\n\
+            <PUBLICATION YEAR>\n\
+            <TITLE>\n\
+            <JOURNAL INFO>\n\
+            <DOI>\n\
+            Repository available at: https://github.com/ryanpmcg/APEXMP\n\
+        \n\
+        Corresponding Author: F. Pan\n\
+        E-mail: blah@blah.com\n\
         ")
-    print("\n" * spacing)
+    print("\n")
 
 def readConfigurationFile():
-    print("Hi")
+
+    # Parse configuration file.
+    with open("config.txt", "r") as ins:
+        for line in ins:
+            parts = line.split(":")
+            if (len(parts) == 2):
+                if (parts[0].startswith("Use BMPs")):
+                    ubmp = parts[1].split(",")
+                if (parts[0].startswith("BMP Selection")):
+                    bmps = parts[1].split(",")
+                if (parts[0].startswith("Distributed")):
+                    dist = parts[1].split(",")
+                if (parts[0].startswith("Create Maps")):
+                    maps = parts[1].lstrip().rstrip()
+                if (parts[0].startswith("Delete Output")):
+                    delete = parts[1].lstrip().rstrip()
+
+    # Exit upon empty inputs.
+    if (len(ubmp) == 0):
+        print("No BMP usage option specified.")
+        sys.exit()
+    if (len(bmps) == 0):
+        print("No BMP selection specified.")
+        sys.exit()
+    if (len(dist) == 0):
+        print("No distributed option specified.")
+        sys.exit()
+    if (len(maps) == 0):
+        print("No mapping option specified.")
+        sys.exit()
+    if (len(delete) == 0):
+        print("No deletion option specified.")
+        sys.exit()
+
+    # Convert boolean strings to boolean values.
+    ubmp = (ubmp == "T")
+    dist = (dist == "T")
+    maps = (maps == "T")
+    delete = (delete == "T")
+
+    # Exit upon incorrect readings.
+    if ((type(ubmp) == type(True)) and (type(dist) == type(True)) and (type(maps) == type(True)) and (type(delete) == type(True))):
+        print("All logical parameters read correctly.")
+    else:
+        print("Incorrect boolean string values. Use 'T' or 'F' only.")
+        sys.exit()
 
 def determineOptimalCores():
     cores = cpu_count()
@@ -128,6 +173,3 @@ if __name__ == '__main__':
 #   user return 1-1: select results_analysis_grouphru_map.py to run
 #   user return 1-2: select both ones above to run
 
-# 4. After user make all the selection (and input), run the selected scripts.
-
-        # Determine a suitable number of cores to use.

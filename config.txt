@@ -1,2 +1,5 @@
-ops or bmps:ops
-bmps:2
+Use BMPs: F
+BMP Selection: 2
+Distributed: T
+Create Maps: T
+Delete Output: F
