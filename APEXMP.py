@@ -181,7 +181,6 @@ def main():
         subprocess.call(str(p[7]) + " ./SRC/prepareDistributed.py " + pString, shell=True)
         subprocess.call(str(p[7]) + " ./SRC/executeDistributed.py " + pString, shell=True)
         subprocess.call(str(p[7]) + " ./SRC/gatherDistributed.py " + pString, shell=True)
-
         if (p[3] == True):
             subprocess.call(str(p[7]) + " ./SRC/mapDistributed.py " + pString, shell=True)
 
@@ -189,7 +188,6 @@ def main():
         subprocess.call(str(p[7]) + " ./SRC/prepareSemiDistributed.py " + pString, shell=True)
         subprocess.call(str(p[7]) + " ./SRC/executeSemiDistributed.py " + pString, shell=True)
         subprocess.call(str(p[7]) + " ./SRC/gatherSemiDistributed.py " + pString, shell=True)
-
         if (p[3] == True):
             subprocess.call(str(p[7]) + " ./SRC/mapSemiDistributed.py " + pString, shell=True)
 
