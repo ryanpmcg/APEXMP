@@ -887,7 +887,6 @@ def main():
     ops_or_bmps = ''
     bmps = ''
 
-
     # Create the run and result folder
     try:
         if not os.path.exists("MPRUNS\\everyhru_map"):

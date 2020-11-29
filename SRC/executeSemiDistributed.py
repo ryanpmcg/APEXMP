@@ -950,21 +950,6 @@ def main():
     # Create empty lists of inputs.
     ops_or_bmps = ''
     bmps = ''
-    # Read the configuration file.
-    with open("config.txt", "r") as config:
-        for line in config:
-            parts = re.split(":|\n",line)
-            if (parts[0].startswith("ops or bmps")):
-                ops_or_bmps = parts[1]                
-            if (parts[0].startswith("bmps")):
-                bmps = parts[1]
-    # Exit upon empty inputs.
-    if (len(ops_or_bmps) == 0):
-        print("Did not make choice of ops or bmps.")
-        sys.exit()
-    if (len(bmps) == 0):
-        print("No bmps specified.")
-        sys.exit()
 
     # Create the run folder
     try:
@@ -1159,7 +1144,7 @@ def main():
             slopegroup = str(hruinvar[i][5])
             area = str(hruinvar[i][6]*30*30)
             slope = str(hruinvar[i][7]/hruinvar[i][6]*100)
-            if ops_or_bmps == 'ops':
+            if ubmp == 'ops':
                 operation = str(1)
             else:
                 operation = str(hruinvar[i][12])
