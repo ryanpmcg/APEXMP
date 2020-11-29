@@ -4,7 +4,7 @@
 #############################################################################
 
 #  Last Updated by: Ryan McGehee and Feng Pan
-#  Last Updated on: 23 November 2020
+#  Last Updated on: 29 November 2020
 #  Purpose: This is a wrapper program to run the component scripts of APEXMP
 #           from a simple configuration file.
 #
@@ -170,13 +170,13 @@ def determineOptimalCores():
 def main():
 
     printStartupInformation()
-    p = readConfigurationFile() # p components: 0=BMPs, 1=BMPtype, 2=Distributed, 3=Map, 4=Delete, 5=Verbose, 6=DevMode, 7=PythonExe
+    p = readConfigurationFile() # p components (index=content): 0=BMPs, 1=BMPtype, 2=Distributed, 3=Map, 4=Delete, 5=Verbose, 6=DevMode, 7=PythonExe
     n = determineOptimalCores()
 
     # Create standard arguments (a string of parameters). Parameters: workDir, delete, verb, ubmp, bmps, devm, nworkers
     pString = str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])) + " " + str(int(p[0])) + " " + str(int(p[1])) + " "+ str(int(p[6])) + " " + str(n)
 
-    # Run user-specified options.
+    # Run user-specified options for all grid cells (distributed).
     if (p[2] == True):
         subprocess.call(str(p[7]) + " ./SRC/prepareDistributed.py " + pString, shell=True)
         subprocess.call(str(p[7]) + " ./SRC/executeDistributed.py " + pString, shell=True)
@@ -184,6 +184,7 @@ def main():
         if (p[3] == True):
             subprocess.call(str(p[7]) + " ./SRC/mapDistributed.py " + pString, shell=True)
 
+    # Run user-specified options for lumped grid cells (semi-distributed).
     else:
         subprocess.call(str(p[7]) + " ./SRC/prepareSemiDistributed.py " + pString, shell=True)
         subprocess.call(str(p[7]) + " ./SRC/executeSemiDistributed.py " + pString, shell=True)

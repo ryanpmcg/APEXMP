@@ -3,14 +3,14 @@
 ############################## PROGRAM METADATA #############################
 #############################################################################
 
-# Last Updated by: Ryan McGehee
-# Last Updated on: 10 November 2020
+# Last Updated by: Feng Pan and Ryan McGehee
+# Last Updated on: 29 November 2020
 # Purpose: This program is designed to run combinations of APEX input files
 #          in a parallel configuration.
 # Contributors: Qingyu Feng (provided seperate sets of code for each data
 #               which was merged and modified from his original script). 
 #               Feng combined these functions in a single script and Ryan
-#               refactored and tested the final code.
+#               tested the final code. This code needs refactoring.
 
 
 #############################################################################

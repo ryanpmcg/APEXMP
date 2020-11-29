@@ -3,8 +3,8 @@
 ############################## PROGRAM METADATA #############################
 #############################################################################
 
-# Last Updated by: Ryan McGehee
-# Last Updated on: 10 November 2020
+# Last Updated by: Feng Pan and Ryan McGehee
+# Last Updated on: 29 November 2020
 # Purpose: This script is designed to prepare the DEM, land use, soil, 
 #          zipcode, slope data input files for APEXMP runs.
 # Contributors: Qingyu Feng (provided seperate sets of code for each data

@@ -3,13 +3,13 @@
 ############################## PROGRAM METADATA #############################
 #############################################################################
 
-# Last Updated by: Feng Pan
-# Last Updated on: 8 Oct 2020
+# Last Updated by: Feng Pan and Ryan McGehee
+# Last Updated on: 29 November 2020
 # Purpose: This script is designed to extract all the results and seperate 
 # 		   them to soil loss, TN, and TP with comparison of different 
 # 		   management plans and orders of differences between each two
 # 		   management plans.
-# Contributors: Feng made, debug, finalized the code alone.
+# Contributors: Feng Pan and Ryan McGehee. This code needs refactoring.
 
 #############################################################################
 ############################# INSTRUCTIONS TO RUN ###########################
