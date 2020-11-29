@@ -882,11 +882,6 @@ def main():
     tstart = str(now.year) + "-" + str(now.month) + "-" + str(now.day) + "-" + str(now.hour) + "-" + str(now.minute) + "-" + str(now.second)
     tsink = now
 
-    # This part can be change to user selection input with the apexmp wrapper
-    # Create empty lists of inputs.
-    ops_or_bmps = ''
-    bmps = ''
-
     # Create the run and result folder
     try:
         if not os.path.exists("MPRUNS\\everyhru_map"):

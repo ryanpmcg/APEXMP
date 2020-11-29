@@ -88,7 +88,7 @@ nworkers = int(sys.argv[7])
 # Announce program start
 if (verb == str(1)):
     print("\n")
-    print("Preparing inputs for every grid cell.")
+    print("Preparing inputs for lumped cells.")
     print("\n")
 
 # Define directories and input file paths
@@ -184,7 +184,7 @@ for didx in range(len(datasets)):
     outslpasc = os.path.join(fd_fslpindiasc, "slp%s.asc" %(st_cty))
 
     # Build raster masking commands
-    cmd1 = 'gdalwarp -dstnodata 0 -cutline %s -crop_to_cutline %s %s' % (inctyshp, fn_dem, outdemras)
+    cmd1 = 'gdalwarp -dstnodata 0 -overwrite -cutline %s -crop_to_cutline %s %s' % (inctyshp, fn_dem, outdemras)
     cmd2 = 'gdalwarp -dstnodata 0 -overwrite -cutline %s -crop_to_cutline %s %s' % (inctyshp, fn_lu, outluras)
     cmd3 = 'gdalwarp -dstnodata 0 -overwrite -cutline %s -crop_to_cutline %s %s' % (inctyshp, fn_sol, outsolras)
     cmd4 = 'gdalwarp -dstnodata 0 -overwrite -cutline %s -crop_to_cutline %s %s' % (inctyshp, fn_zip, outzipras)
@@ -202,7 +202,7 @@ for didx in range(len(datasets)):
 
     # Execute commands
     for iter in range(1,12):
-        if (devm == False):
+        if (devm == str(0)):
             subprocess.call(eval('cmd' + str(iter)), shell=True)
             print("\n")
 

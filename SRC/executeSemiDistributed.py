@@ -946,11 +946,6 @@ def main():
     now = datetime.datetime.now()
     tstarttotal = str(now.year) + "-" + str(now.month) + "-" + str(now.day) + "-" + str(now.hour) + "-" + str(now.minute) + "-" + str(now.second)
 
-    # This part can be change to user selection input with the apexmp wrapper
-    # Create empty lists of inputs.
-    ops_or_bmps = ''
-    bmps = ''
-
     # Create the run folder
     try:
         if not os.path.exists("MPRUNS\\grouphru_map"):
@@ -1040,7 +1035,7 @@ def main():
 
             for hruidx in range(len(list(hrulsts.keys()))):             
                 # change ops here
-                if ops_or_bmps == "ops":
+                if (ubmp == str(0)):
                     # Get inputs.
                     hruinpart1 = []
                     hruinpart2 = []
@@ -1144,7 +1139,7 @@ def main():
             slopegroup = str(hruinvar[i][5])
             area = str(hruinvar[i][6]*30*30)
             slope = str(hruinvar[i][7]/hruinvar[i][6]*100)
-            if ubmp == 'ops':
+            if (ubmp == str(0)):
                 operation = str(1)
             else:
                 operation = str(hruinvar[i][12])
