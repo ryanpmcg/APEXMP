@@ -3,13 +3,14 @@
 ############################## PROGRAM METADATA #############################
 #############################################################################
 
-# Last Updated by: Feng Pan
-# Last Updated on: 8 Oct 2020
+# Last Updated by: Feng Pan and Ryan McGehee
+# Last Updated on: 29 November 2020
 # Purpose: This script is designed to extract all the results and seperate 
 # 		   them to soil loss, TN, and TP with comparison of different 
 # 		   management plans and orders of differences between each two
 # 		   management plans.
-# Contributors: Feng made, debug, finalized the code alone.
+# Contributors: Feng Pan and Ryan McGehee. This code needs refactoring.
+
 
 #############################################################################
 ############################# INSTRUCTIONS TO RUN ###########################
@@ -36,10 +37,28 @@
 ##############################################################################
 ############################## IMPORT LIBRARIES ##############################
 ##############################################################################
+
 import glob, os, sys
 import pandas as pd
 
-workdir = os.path.dirname(os.path.realpath(sys.argv[0]))
+
+#############################################################################
+############################## GLOBAL VARIABLES #############################
+#############################################################################
+
+workdir = sys.argv[1]
+delete = sys.argv[2]
+verb = sys.argv[3]
+ubmp = sys.argv[4]
+bmps = sys.argv[5]
+devm = sys.argv[6]
+nworkers = int(sys.argv[7])
+
+
+#############################################################################
+################################ RUN PROGRAM ################################
+#############################################################################
+
 resultslst = glob.glob("%s/*.csv" %(workdir+"\\RESULTS\\grouphru_map")) 
 resultsname = []  
 for idx in range(len(resultslst)):

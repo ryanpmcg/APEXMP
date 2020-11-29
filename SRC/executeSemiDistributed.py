@@ -3,17 +3,15 @@
 ############################## PROGRAM METADATA #############################
 #############################################################################
 
-#  Last Updated by: Feng Pan
-#  Last Updated on: 8 Oct 2020
-#  Purpose: This program is designed to run combinations of APEX input files.
-#           This script is designed to run in parallel to execute large
-#           batches of runs quickly.
-#
-#  Contributors: Qingyu Feng (provided APEX series run code which was heavily 
-#               modified from his original script) and Ryan P. McGehee (
-#               helped to modify multiprocessing routines and debug). Feng 
-#               made most modification contributions and refactored the final
-#               code.
+# Last Updated by: Feng Pan and Ryan McGehee
+# Last Updated on: 29 November 2020
+# Purpose: This program is designed to run combinations of APEX input files
+#          in a parallel configuration.
+# Contributors: Qingyu Feng (provided seperate sets of code for each data
+#               which was merged and modified from his original script). 
+#               Feng combined these functions in a single script and Ryan
+#               tested the final code. This code needs refactoring.
+
 
 #############################################################################
 ############################# INSTRUCTIONS TO RUN ###########################
@@ -63,6 +61,7 @@ from datetime import timedelta
 from multiprocessing import cpu_count, Pool, Process
 from shutil import copyfile
 from subprocess import Popen,PIPE
+
 
 #############################################################################
 ############################## GLOBAL VARIABLES #############################
