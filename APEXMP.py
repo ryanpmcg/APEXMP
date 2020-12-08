@@ -117,7 +117,7 @@ def readConfigurationFile():
 
     # Exit upon empty inputs.
     if (len(pythonExe) == 0):
-        print("No BMP usage option specified.")
+        print("No python path specified.")
         sys.exit()
     if (len(ubmp) == 0):
         print("No BMP usage option specified.")
