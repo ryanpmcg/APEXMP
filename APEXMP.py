@@ -100,6 +100,8 @@ def readConfigurationFile():
             if (len(parts) == 2):
                 if (parts[0].startswith("Python")):
                     pythonExe = parts[1].lstrip().rstrip()
+                if (parts[0].startswith("Shapefile")):
+                    shapefile = parts[1].lstrip().rstrip()
                 if (parts[0].startswith("Cores")):
                     nworkers = parts[1].lstrip().rstrip()
                 if (parts[0].startswith("Use BMPs")):
@@ -120,6 +122,9 @@ def readConfigurationFile():
     # Exit upon empty inputs.
     if (len(pythonExe) == 0):
         print("No python path specified.")
+        sys.exit()
+    if (len(shapefile) == 0):
+        print("No shapefile specified.")
         sys.exit()
     if (len(nworkers) == 0):
         print("No cores option specified.")
@@ -163,7 +168,7 @@ def readConfigurationFile():
         sys.exit()
     
     # Return values.
-    return ubmp, bmps, dist, maps, delete, verb, devm, pythonExe, nworkers
+    return ubmp, bmps, dist, maps, delete, verb, devm, pythonExe, nworkers, shapefile
 
 def determineOptimalCores():
     cores = cpu_count()
@@ -175,7 +180,7 @@ def determineOptimalCores():
 def main():
 
     printStartupInformation()
-    p = readConfigurationFile() # p components (index=content): 0=BMPs, 1=BMPtype, 2=Distributed, 3=Map, 4=Delete, 5=Verbose, 6=DevMode, 7=PythonExe, 8=CoreCount
+    p = readConfigurationFile() # p components (index=content): 0=BMPs, 1=BMPtype, 2=Distributed, 3=Map, 4=Delete, 5=Verbose, 6=DevMode, 7=PythonExe, 8=CoreCount, 9=Shapefile
     n = int(p[8])
 
     # Handle core count input.
@@ -187,8 +192,8 @@ def main():
         print("\nUsing user-specified core count.")
         print(str(n) + " core(s) will be used.\n")
 
-    # Create standard arguments (a string of parameters). Parameters: workDir, delete, verb, ubmp, bmps, devm, nworkers
-    pString = str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])) + " " + str(int(p[0])) + " " + str(int(p[1])) + " "+ str(int(p[6])) + " " + str(n)
+    # Create standard arguments (a string of parameters). Parameters: workDir, delete, verb, ubmp, bmps, devm, nworkers, shapefile
+    pString = str(workdir) + " " + str(int(p[4])) + " " + str(int(p[5])) + " " + str(int(p[0])) + " " + str(int(p[1])) + " "+ str(int(p[6])) + " " + str(n) + " " + str(p[9])
 
     # Run user-specified options for all grid cells (distributed).
     if (p[2] == True):
