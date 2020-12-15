@@ -1,0 +1,15 @@
+# Specify your python directory here or just use 'python' if it is in your system PATH variable.
+Python:: python
+
+# Specify your APEXMP options below which are either integer (0-9) or true/false (T/F):
+Shapefile:: LargeJob.shp
+Use BMPs:: F
+BMP Selection:: 2
+Distributed:: T
+Create Maps:: T
+Delete Output:: F
+Verbose:: T
+Cores:: 0
+
+# DEVELOPERS ONLY: Specify T to skip execution.
+Developer Mode:: F
