@@ -69,6 +69,7 @@ ubmp = sys.argv[4]
 bmps = sys.argv[5]
 devm = sys.argv[6]
 nworkers = int(sys.argv[7])
+shp = sys.argv[8]
 
 
 #############################################################################
@@ -92,7 +93,7 @@ fd_data = "original"
 indi = "indi"
 asc = "asc"
 
-fn_studyarea = os.path.join(fd_gismain, fd_studyarea, "studyarea.shp")
+fn_studyarea = os.path.join(fd_gismain, fd_studyarea, shp)
 fn_dem = os.path.join(fd_gismain, fd_dem, fd_data, "alldem1.tif")
 fn_lu = os.path.join(fd_gismain, fd_lu, fd_data, "alllanduse.tif")
 fn_sol = os.path.join(fd_gismain, fd_sol, fd_data, "allsoil.tif")
