@@ -27,7 +27,7 @@
 #               --INPUTS
 #                         --ssurgo2apex.csv      (soil database, provided)
 #                         --studyarea 
-#                            --studyarea.shp       (studyarea shapefiles, needed)
+#                            --YourShapefileNameHere.shp       (studyarea shapefiles, needed)
 #                         --dem
 #                             --asc               (final maps for each county in study area)
 #                             --indi              (intermediate maps, will be deleted at the end)
@@ -106,6 +106,17 @@ fd_fsolindi = os.path.join(fd_gismain, fd_sol, indi)
 fd_fsolindiasc = os.path.join(fd_gismain, fd_sol, asc)
 fd_fslpindi = os.path.join(fd_gismain, fd_slp, indi)
 fd_fslpindiasc = os.path.join(fd_gismain, fd_slp, asc)
+
+# Delete existing files
+directories = [fd_fdemindi, fd_fdemindiasc, fd_fluindi, fd_fluindiasc, fd_fsolindi, fd_fsolindiasc, fd_fslpindi, fd_fslpindiasc]
+for d in directories:
+    if (verb == str(1)):
+        print("Clearing directory contents from: " + str(d))
+    files = glob.glob(str(d) + "*")
+    for f in files:
+        os.remove(f)
+if (verb == str(1)):
+    print("\n")
 
 outdemras = os.path.join(fd_fdemindi, "dem.tif")
 outluras = os.path.join(fd_fluindi, "lu.tif")
