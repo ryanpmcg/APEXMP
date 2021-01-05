@@ -2,7 +2,8 @@
 The Agricultural Policy Extender Model Multiprocessing Program (APEXMP) is a Python-based command-line tool designed to execute large numbers of APEX model runs in parallel.
 
 ## HOW TO INSTALL
-Write installation instructions here...
+Step 1: Write installation instructions here...
+Step 2: Download the "./APEXMP/INPUTS" folder from here.
 
 ## HOW TO RUN
 Simply place your "StudyArea.shp" shapefile in the "C:\APEXMP\INPUT...", then double-click the "RunAPEXMP.bat" batch file, and a command prompt window should appear while the job is being executed.
