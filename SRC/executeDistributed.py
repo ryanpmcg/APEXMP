@@ -242,16 +242,16 @@ def modifySubFile(hruinvar, idx, soldb):
         fstr = fstr.replace("__opsid__",str(int(hruinvar[7])))
     else:
         fstr = fstr.replace("__opsid__",str(int(hruinvar[3])))
-    fstr = fstr.replace("__latitude__",str(round(float(hruinvar[0]),7)))
-    fstr = fstr.replace("__longitude__",str(round(float(hruinvar[1]),7)))
+    fstr = fstr.replace("__latitude__",str(format(hruinvar[0], '.7f')))
+    fstr = fstr.replace("__longitude__",str(format(hruinvar[1], '.7f')))
     fstr = fstr.replace("__wsa_ha__",str(0.09))  
-    fstr = fstr.replace("__chl__",str(round(float(soldata[0]["slopelenusle_r"]),3))) 
-    fstr = fstr.replace("__chs__",str(round(float(hruinvar[4]),3)))
-    fstr = fstr.replace("__slp__",str(round(float(hruinvar[4]),3)))  
-    fstr = fstr.replace("__splg__",str(round(float(soldata[0]["slopelenusle_r"]),3)))  
-    fstr = fstr.replace("__upn__",str(round(float(getUplandManningN(hruinvar[3])),3)))   
-    fstr = fstr.replace("__rchl__",str(round(float(soldata[0]["slopelenusle_r"]),3)))  
-    fstr = fstr.replace("__rchs__",str(round(float(hruinvar[4]),3))) 
+    fstr = fstr.replace("__chl__",str(format(soldata[0]["slopelenusle_r"], '.3f'))) 
+    fstr = fstr.replace("__chs__",str(format(hruinvar[4], '.3f')))
+    fstr = fstr.replace("__slp__",str(format(hruinvar[4], '.3f')))  
+    fstr = fstr.replace("__splg__",str(format(soldata[0]["slopelenusle_r"], '.3f')))  
+    fstr = fstr.replace("__upn__",str(format(getUplandManningN(hruinvar[3]), '.3f')))   
+    fstr = fstr.replace("__rchl__",str(format(soldata[0]["slopelenusle_r"], '.3f')))  
+    fstr = fstr.replace("__rchs__",str(format(hruinvar[4], '.3f'))) 
 
     if (hsgnumb == 3 or hsgnumb == 4 and hruinvar[4] < 0.02):
         fstr = fstr.replace("__ddi__",str(1000.0))
@@ -280,11 +280,11 @@ def modifySitFile(hruinvar, idx, soldb):
     f.close()
 
     # Modify the sit file with new values.
-    fstr = fstr.replace("__latitude__",str(round(float(hruinvar[0]),2)))
-    fstr = fstr.replace("__longitude__",str(round(float(hruinvar[1]),2)))
-    fstr = fstr.replace("__elev__",str(round(float(hruinvar[5]),2)))
-    fstr = fstr.replace("__bchl__",str(round(float(soldata[0]["slopelenusle_r"]),2)))  
-    fstr = fstr.replace("__bchs__",str(round(float(hruinvar[4]),2)))  
+    fstr = fstr.replace("__latitude__",str(format(hruinvar[0], '.2f')))
+    fstr = fstr.replace("__longitude__",str(format(hruinvar[1], '.2f')))
+    fstr = fstr.replace("__elev__",str(format(hruinvar[5], '.2f')))
+    fstr = fstr.replace("__bchl__",str(format(soldata[0]["slopelenusle_r"], '.2f')))  
+    fstr = fstr.replace("__bchs__",str(format(hruinvar[4], '.2f')))  
 
     # Write the new sit file.
     outf = open("SIT.SIT","w")
