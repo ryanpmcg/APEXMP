@@ -29,9 +29,10 @@
 #                         --usstctyziplatlong2sql.txt (zipcode database, provided)
 #                         --studyarea 
 #                            --YourShapefileNameHere.shp       (studyarea shapefiles, needed)
+#                            --cty+YourShapefileNameHere.shp   (studyarea county shapefiles, created)
 #                         --county
 #                             --stcty1.shp        (all of the counties, provided) 
-#                             --all               (includes all of the counties' shapefiles, provided)
+#                             --all               (includes all of the counties' shapefiles, created)
 #                         --dem
 #                             --asc               (final maps for each county in study area)
 #                             --indi              (intermediate maps, will be deleted at the end)
@@ -110,7 +111,6 @@ fn_studyarea = os.path.join(fd_gismain, fd_studyarea, shp)
 fd_ctyshp = os.path.join(fd_gismain, fd_cty, fd_cty_all)
 fn_allctyshp = os.path.join(fd_gismain, fd_cty, "stcty1.shp")
 fn_studyareactyshp = os.path.join(fd_gismain, fd_studyarea, str("cty" + shp))
-fn_studyareactylist = os.path.join(fd_gismain, fd_studyarea, "studyareacty.txt") 
 
 fn_dem = os.path.join(fd_gismain, fd_dem, fd_data, "alldem1.tif")
 fn_lu = os.path.join(fd_gismain, fd_lu, fd_data, "alllanduse.tif")
@@ -129,7 +129,11 @@ fd_fslpindi = os.path.join(fd_gismain, fd_slp, indi)
 fd_fslpindiasc = os.path.join(fd_gismain, fd_slp, asc)
 
 # Delete existing files
-directories = [fd_fdemindi, fd_fdemindiasc, fd_fluindi, fd_fluindiasc, fd_fsolindi, fd_fsolindiasc, fd_fzipindi, fd_fzipindiasc, fd_fslpindi, fd_fslpindiasc]
+try:
+    os.remove(fn_studyareactyshp)
+except OSError:
+    pass
+directories = [fd_ctyshp, fd_fdemindi, fd_fdemindiasc, fd_fluindi, fd_fluindiasc, fd_fsolindi, fd_fsolindiasc, fd_fzipindi, fd_fzipindiasc, fd_fslpindi, fd_fslpindiasc]
 for d in directories:
     if (verb == str(1)):
         print("Clearing directory contents from: " + str(d))
