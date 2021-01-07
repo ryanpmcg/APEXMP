@@ -45,7 +45,7 @@
 
 import datetime
 import math
-import os, re
+import os, re, stat
 import shutil
 import signal
 import string
@@ -745,6 +745,7 @@ def doSetup(hruinvar, idx, soldb):
         modifySitFile(hruinvar, idx, soldb)
         modifySolFile(hruinvar, idx, soldb)
 
+        os.chdir(currentdir)
         # Modify APEX file location
         f = open("APEXFILE.DAT","r")
         ob = open("OPSCCOM_bmps.DAT","r")
@@ -808,29 +809,12 @@ def doRun(idx, tsink):
     subprocess.call(apex, stdout=runlog, stderr=runerr, shell=True)
     runlog.close()
     runerr.close()
-		
-    os.remove("Results.MSA")	
-    os.remove("Results.MWS")	
-    os.remove("Results.OUT")	
-    os.remove("Results.AWP")    	
-    os.remove("APEXCONT.DAT")	
-    os.remove("APEXDIM.DAT")	
-    os.remove("APEXFILE.DAT")	
-    os.remove("APEXRUN.DAT")	
-    os.remove("SITECOM.DAT") 	
-    os.remove("SOILCOM.DAT")	
-    os.remove("SUBACOM.DAT")
-    os.remove("OPSCCOM_bmps.DAT")
-    os.remove("OPSCCOM_ops.DAT")
-    os.remove("WINDWEPP.DAT")
-    os.remove("WPM1WEPP.DAT")
-    os.remove("SOL.SOL")
-    os.remove("SUB.SUB")
-    os.remove("SIT.SIT") 	
-    os.remove("runerr.txt")	
-    os.remove("runlog.txt")
-    for filename in glob.glob("./fort*"):
-        os.remove(filename) 
+
+    # Remove unnecessary files to reduce occupied space
+    for filename in glob.glob("./*"):
+        if filename != ".\Results.WSS":
+            os.chmod(filename, stat.S_IWRITE)
+            os.remove(filename) 
    
     # Print progress to terminal.
     if (float(idx) % 25 == 0):

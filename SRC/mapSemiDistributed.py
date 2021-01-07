@@ -128,6 +128,8 @@ for idx in range(len(resultslst)):
                                         "Total N(kg/ha)":"Total N%i(kg/ha)" %(op), 
                                         "Total P(kg/ha)":"Total P%i(kg/ha)" %(op)})
         subsetr["Soil Loss%i(kg/ha)" %(op)] = subsetr["Soil Loss%i(kg/ha)" %(op)].astype(float)*1000
+        subsetr["Total N%i(kg/ha)" %(op)] = subsetr["Total N%i(kg/ha)" %(op)].astype(float)*1000
+        subsetr["Total P%i(kg/ha)" %(op)] = subsetr["Total P%i(kg/ha)" %(op)].astype(float)*1000
 
         #merge the county and data and then split the data by col and row IDs
         subsetr["county_SL"] = subsetr[["County","Soil Loss%i(kg/ha)" %(op)]].astype(str).agg('_'.join, axis=1)

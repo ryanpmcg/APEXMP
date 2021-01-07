@@ -112,10 +112,10 @@ for idx in range(len(resultslst)):
                                     subsetr["Soil Loss%i(kg/ha)" %(op)].astype(float)*1000], 
                                     axis = 1, sort=False)
             TN = pd.concat([subsetr["RowID_ColumnID"].astype(str),
-                            subsetr["Total N%i(kg/ha)" %(op)].astype(float)], 
+                            subsetr["Total N%i(kg/ha)" %(op)].astype(float)*1000], 
                             axis = 1, sort=False)
             TP = pd.concat([subsetr["RowID_ColumnID"].astype(str), 
-                            subsetr["Total P%i(kg/ha)" %(op)].astype(float)], 
+                            subsetr["Total P%i(kg/ha)" %(op)].astype(float)*1000], 
                             axis = 1, sort=False)
             soillossdata[opid] = soilloss["Soil Loss%i(kg/ha)" %(op)].astype(int).tolist()
             TNdata[opid] = TN["Total N%i(kg/ha)" %(op)].astype(int).tolist()

@@ -47,7 +47,7 @@
 
 import datetime
 import math
-import os, re
+import os, re, stat
 import shutil
 import signal
 import string
@@ -296,23 +296,23 @@ def modifySubFile(hruinvar, idx, soldb, statename):
 
     f = open("SUB.SUB","r")
     fstr = f.read()
-    f.close()
+    f.close()  
 
     # Modify the sub file with new values.
     if (len(hruinvar) == 13):
         fstr = fstr.replace("__opsid__",str(int(hruinvar[12])))
     else:
-        fstr = fstr.replace("__opsid__",str(int(hruinvar[4])))
-    fstr = fstr.replace("__latitude__",str(format(hruinvar[8],'.7f')))
-    fstr = fstr.replace("__longitude__",str(format(hruinvar[9],'.7f')))
-    fstr = fstr.replace("__wsa_ha__",str(format(hruinvar[6]*900/10000,'.3f')))
-    fstr = fstr.replace("__chl__",str(format(soldata[0]["slopelenusle_r"],'.3f'))) 
-    fstr = fstr.replace("__chs__",str(format(hruinvar[7]/hruinvar[6],'.3f')))
-    fstr = fstr.replace("__slp__",str(format(hruinvar[7]/hruinvar[6],'.3f')))  
-    fstr = fstr.replace("__splg__",str(format(soldata[0]["slopelenusle_r"],'.3f')))      
-    fstr = fstr.replace("__upn__",str(format(getUplandManningN(hruinvar[4]),'.3f'))) 
-    fstr = fstr.replace("__rchl__",str(format(soldata[0]["slopelenusle_r"],'.3f')))  
-    fstr = fstr.replace("__rchs__",str(format(hruinvar[7]/hruinvar[6],'.3f'))) 
+        fstr = fstr.replace("__opsid__",str(int(hruinvar[4])))      
+    fstr = fstr.replace("__latitude__",str(format(float(hruinvar[8]), '.7f')))   
+    fstr = fstr.replace("__longitude__",str(format(float(hruinvar[9]), '.7f')))
+    fstr = fstr.replace("__wsa_ha__",str(format(float(hruinvar[6])*900/10000, '.3f')))   
+    fstr = fstr.replace("__chl__",str(format(float(soldata[0]["slopelenusle_r"]), '.3f')))    
+    fstr = fstr.replace("__chs__",str(format(float(hruinvar[7])/float(hruinvar[6]), '.3f')))   
+    fstr = fstr.replace("__slp__",str(format(float(hruinvar[7])/float(hruinvar[6]), '.3f')))      
+    fstr = fstr.replace("__splg__",str(format(float(soldata[0]["slopelenusle_r"]), '.3f')))         
+    fstr = fstr.replace("__upn__",str(format(getUplandManningN(float(hruinvar[4])), '.3f')))  
+    fstr = fstr.replace("__rchl__",str(format(float(soldata[0]["slopelenusle_r"]), '.3f')))     
+    fstr = fstr.replace("__rchs__",str(format(float(hruinvar[7])/float(hruinvar[6]), '.3f')))    
 
     if (hsgnumb == 3 or hsgnumb == 4 and hruinvar[7]/hruinvar[6] < 0.02):
         fstr = fstr.replace("__ddi__",str(1000.0))
@@ -342,11 +342,11 @@ def modifySitFile(hruinvar, idx, soldb, statename):
     f.close()
 
     # Modify the sit file with new values.
-    fstr = fstr.replace("__latitude__",str(format(hruinvar[8],'.2f')))
-    fstr = fstr.replace("__longitude__",str(format(hruinvar[9],'.2f')))
-    fstr = fstr.replace("__elev__",str(format(hruinvar[10]/hruinvar[6],'.2f')))
-    fstr = fstr.replace("__bchl__",str(format(soldata[0]["slopelenusle_r"],'.2f')))  
-    fstr = fstr.replace("__bchs__",str(format(hruinvar[7]/hruinvar[6],'.2f')))  
+    fstr = fstr.replace("__latitude__",str(format(float(hruinvar[8]),'.2f')))
+    fstr = fstr.replace("__longitude__",str(format(float(hruinvar[9]),'.2f')))
+    fstr = fstr.replace("__elev__",str(format(float(hruinvar[10])/float(hruinvar[6]),'.2f')))
+    fstr = fstr.replace("__bchl__",str(format(float(soldata[0]["slopelenusle_r"]),'.2f')))  
+    fstr = fstr.replace("__bchs__",str(format(float(hruinvar[7])/float(hruinvar[6]),'.2f')))  
 
     # Write the new sit file.
     outf = open("SIT.SIT","w")
@@ -811,13 +811,14 @@ def doSetup(hruinvar, idx, soldb, statename):
         modifySitFile(hruinvar, idx, soldb, statename)
         modifySolFile(hruinvar, idx, soldb, statename)
 
+        os.chdir(currentdir)        
         # Modify APEX file location
         f = open("APEXFILE.DAT","r")
         ob = open("OPSCCOM_bmps.DAT","r")
         oo = open("OPSCCOM_ops.DAT","r")
         wi = open("WINDWEPP.DAT","r")
         wp = open("WPM1WEPP.DAT","r")
-
+        
         fstr = f.read()
         obstr = ob.read()
         oostr = oo.read()
@@ -853,7 +854,7 @@ def doSetup(hruinvar, idx, soldb, statename):
         outoo.write(oostr)
         outob.write(obstr)
         outwi.write(wistr)
-        outwp.write(wpstr)
+        outwp.write(wpstr)       
         outf.close()
         outoo.close()
         outob.close()
@@ -874,28 +875,11 @@ def doRun(idx, tsink, statename):
     runlog.close()
     runerr.close()
 
-    os.remove("Results.MSA")	
-    os.remove("Results.MWS")	
-    os.remove("Results.OUT")	
-    os.remove("Results.AWP")    	
-    os.remove("APEXCONT.DAT")	
-    os.remove("APEXDIM.DAT")	
-    os.remove("APEXFILE.DAT")	
-    os.remove("APEXRUN.DAT")	
-    os.remove("SITECOM.DAT") 	
-    os.remove("SOILCOM.DAT")	
-    os.remove("SUBACOM.DAT")
-    os.remove("OPSCCOM_bmps.DAT")
-    os.remove("OPSCCOM_ops.DAT")
-    os.remove("WINDWEPP.DAT")
-    os.remove("WPM1WEPP.DAT")
-    os.remove("SOL.SOL")
-    os.remove("SUB.SUB")
-    os.remove("SIT.SIT") 	
-    os.remove("runerr.txt")	
-    os.remove("runlog.txt")
-    for filename in glob.glob("./fort*"):
-        os.remove(filename) 
+    # Remove unnecessary files to reduce occupied space
+    for filename in glob.glob("./*"):
+        if filename != ".\Results.WSS":
+            os.chmod(filename, stat.S_IWRITE)
+            os.remove(filename) 
     
     # Print progress to terminal.
     if (float(idx) % 25 == 0):

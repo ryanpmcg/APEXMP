@@ -55,7 +55,7 @@
 ############################## IMPORT LIBRARIES ##############################
 ##############################################################################
 
-import os, glob, subprocess, sys
+import os, glob, subprocess, sys, stat
 
 
 #############################################################################
@@ -112,8 +112,9 @@ directories = [fd_fdemindi, fd_fdemindiasc, fd_fluindi, fd_fluindiasc, fd_fsolin
 for d in directories:
     if (verb == str(1)):
         print("Clearing directory contents from: " + str(d))
-    files = glob.glob(str(d) + "*")
+    files = glob.glob(str(d) + "/*")
     for f in files:
+        os.chmod(f, stat.S_IWRITE)
         os.remove(f)
 if (verb == str(1)):
     print("\n")
@@ -156,6 +157,14 @@ if delete == str(1):
     if (verb == str(1)):
         print("Deleting nonessential output.")
         print("\n")
+
+    os.chmod(outdemras, stat.S_IWRITE)
+    os.chmod(outluras, stat.S_IWRITE) 
+    os.chmod(outsolras, stat.S_IWRITE) 
+    os.chmod(outsd8, stat.S_IWRITE) 
+    os.chmod(outfel, stat.S_IWRITE) 
+    os.chmod(outp, stat.S_IWRITE) 
+
     os.remove(outdemras)
     os.remove(outluras)
     os.remove(outsolras)
