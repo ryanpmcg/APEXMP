@@ -1,4 +1,4 @@
 @ECHO OFF
 CD "C:\APEXMP"
 
-python APEXMP.py
+APEXMP.exe

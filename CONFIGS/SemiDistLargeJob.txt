@@ -7,7 +7,7 @@ Use BMPs:: F
 BMP Selection:: 2
 Distributed:: F
 Create Maps:: T
-Delete Output:: F
+Delete Output:: T
 Verbose:: T
 Cores:: 0
 
